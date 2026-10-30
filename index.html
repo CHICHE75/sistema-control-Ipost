@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JFS Sistemas - Control y Gestión v1.0</title>
+    <!-- Librería SheetJS (XLSX) para leer archivos de Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { max-width: 1350px; margin: 0 auto; }
+        
+        /* Pantalla de Menú Principal */
+        #menuPrincipal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+        }
+        .menu-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 520px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+        }
+        .menu-card h1 { font-size: 24px; color: #0f172a; margin-bottom: 10px; }
+        .version-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .btn-menu {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #2563eb;
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-menu:hover { background: #1d4ed8; }
+        .btn-menu-secondary { background: #059669; }
+        .btn-menu-secondary:hover { background: #047857; }
+        .btn-menu-tertiary { background: #7c3aed; }
+        .btn-menu-tertiary:hover { background: #6d28d9; }
+        .btn-menu-quaternary { background: #d97706; }
+        .btn-menu-quaternary:hover { background: #b45309; }
+
+        /* Estilos generales de las pantallas de trabajo */
+        .app-screen { display: none; }
+        
+        header {
+            background: #ffffff;
+            padding: 22px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        h1 { font-size: 22px; margin: 0; color: #0f172a; }
+        p { margin: 4px 0 0 0; color: #64748b; font-size: 13px; }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 950px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+        .card h2 { 
+            font-size: 16px; 
+            margin-top: 0; 
+            color: #0f172a; 
+            border-bottom: 2px solid #f1f5f9; 
+            padding-bottom: 10px; 
+            margin-bottom: 16px;
+        }
+
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 5px; }
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+        input:focus { outline: none; border-color: #2563eb; background: #fff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+        .btn-primary { width: 100%; background: #2563eb; color: white; margin-top: 6px; padding: 12px; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-success { background: #059669; color: white; }
+        .btn-success:hover { background: #047857; }
+        .btn-warning { background: #d97706; color: white; }
+        .btn-warning:hover { background: #b45309; }
+        .btn-danger { background: #e11d48; color: white; }
+        .btn-danger:hover { background: #be123c; }
+        .btn-delete { background: #fee2e2; color: #dc2626; padding: 6px 10px; font-size: 11px; border-radius: 6px; }
+        .btn-delete:hover { background: #fecdd3; }
+        .btn-volver { background: #64748b; color: white; }
+        .btn-volver:hover { background: #475569; }
+
+        .live-summary-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .live-summary-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #166534;
+            margin-bottom: 5px;
+        }
+        .live-summary-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #15803d;
+        }
+        .live-summary-sub {
+            font-size: 12px;
+            color: #166534;
+            margin-top: 4px;
+        }
+
+        /* Estilos del Gráfico Minimalista */
+        .chart-container {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #cbd5e1;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+        .chart-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+        .chart-bar-row {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            margin-bottom: 6px;
+            gap: 6px;
+        }
+        .chart-label {
+            width: 130px;
+            color: #334155;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chart-bar-wrapper {
+            flex-grow: 1;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 12px;
+        }
+        .chart-bar-fill {
+            background: #7c3aed;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .chart-value {
+            width: 55px;
+            text-align: right;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 11px;
+        }
+
+        .table-responsive { overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; white-space: nowrap; }
+        th { 
+            background: #f8fafc; 
+            color: #475569; 
+            padding: 12px 14px; 
+            font-size: 11px; 
+            font-weight: 700;
+            text-transform: uppercase; 
+            border-bottom: 2px solid #e2e8f0;
+        }
+        td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; }
+        tbody tr:hover { background: #f8fafc; }
+
+        .badge-tomas {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            border: 1px solid #cbd5e1;
+        }
+        .badge-porcentaje {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-block;
+            border: 1px solid #bfdbfe;
+        }
+        .text-center { text-align: center; }
+        .empty { text-align: center; color: #94a3b8; padding: 30px; font-style: italic; }
+        
+        footer.app-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            color: #64748b;
+            font-size: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- ================= MENÚ PRINCIPAL ================= -->
+        <div id="menuPrincipal">
+            <div class="menu-card">
+                <span class="version-badge">Versión 1.0 (Estable)</span>
+                <h1>JFS Sistemas</h1>
+                <p style="margin-top: -5px; margin-bottom: 20px; color: #64748b;">Selecciona el módulo de trabajo que deseas abrir:</p>
+                
+                <button class="btn-menu" onclick="cambiarPantalla('pantallaAvisosDeuda', true)">📦 Control Avisos de Deuda</button>
+                <button class="btn-menu btn-menu-secondary" onclick="cambiarPantalla('pantallaTomas', true)">⚡ Control Tomas de Estado</button>
+                <button class="btn-menu btn-menu-tertiary" onclick="cambiarPantalla('pantallaCierres', true)">🔄 Control Cierres y Reaperturas</button>
+                <button class="btn-menu btn-menu-quaternary" onclick="cambiarPantalla('pantallaFacturas', true)">📄 Control Facturas</button>
+            </div>
+        </div>
+
+        <!-- ================= TRABAJO 1: CONTROL AVISOS DE DEUDA ================= -->
+        <div id="pantallaAvisosDeuda" class="app-screen">
+            <header>
+                <div>
+                    <h1>Control Avisos de Deuda</h1>
+                    <p>Módulo de gestión y efectividad de carteros</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
+                    <button onclick="exportarExcelCarteros()" class="btn-success">Exportar a Excel (.xls)</button>
+                    <button onclick="borrarTodoCarteros()" class="btn-danger">Borrar Todo</button>
+                </div>
+            </header>
+
+            <div class="main-grid">
+                <div class="card">
+                    <h2>Cargar Tarea</h2>
+                    <form id="formCartero" onsubmit="guardarRegistro(event)">
+                        <div class="form-group">
+                            <label>Fecha de Entrega</label>
+                            <input type="date" id="fechaC" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Código de Cartero</label>
+                            <input type="text" id="codigoC" required placeholder="Ej: 901100" oninput="buscarOperario(this.value)">
+                            <div id="nombreDetectadoC" class="codigo-ayuda" style="font-size: 11px; margin-top: 4px; font-weight: 600;">Ingresa un código válido (Ej: 901100)</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre del Cartero</label>
+                            <input type="text" id="nombreC" required readonly placeholder="Se completa automáticamente" style="background: #e2e8f0; cursor: not-allowed;">
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label>1º Aviso</label>
+                                <input type="number" id="val1C" min="0" required placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label>2º Aviso</label>
+                                <input type="number" id="val2C" min="0" required placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad de Firmados</label>
+                            <input type="number" id="valFirmadosC" min="0" required placeholder="0">
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Registro</button>
+                    </form>
+
+                    <div class="live-summary-box">
+                        <div class="live-summary-title">Efectividad Total General</div>
+                        <div id="livePercentageC" class="live-summary-value">0.0%</div>
+                        <div id="liveDetailsC" class="live-summary-sub">Firmados: 0 / Total Avisos: 0</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="padding: 16px; margin-bottom: 20px;">
+                        <label>Buscar por Código, Nombre o Fecha:</label>
+                        <input type="text" id="buscadorC" placeholder="Escribe para filtrar registros..." onkeyup="renderizarTodoCarteros()">
+                    </div>
+
+                    <div class="card">
+                        <h2>Detalle de Operaciones Individuales</h2>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Código</th>
+                                        <th>Cartero</th>
+                                        <th class="text-center">1º Aviso</th>
+                                        <th class="text-center">2º Aviso</th>
+                                        <th class="text-center">Total Avisos</th>
+                                        <th class="text-center">Firmados</th>
+                                        <th class="text-center">% Entregados</th>
+                                        <th class="text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCuerpoC"></tbody>
+                            </table>
+                            <div id="mensajeVacioC" class="empty">No hay registros cargados actualmente.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TRABAJO 2: CONTROL TOMAS DE ESTADO ================= -->
+        <div id="pantallaTomas" class="app-screen">
+            <header>
+                <div>
+                    <h1>Control Tomas de Estado - Gráfico por Cartero y Día</h1>
+                    <p>Reporte cronológico y volumen de tomas desglosado por cartero y fecha</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
+                    <button onclick="document.getElementById('inputExcelTomas').click()" class="btn-success">📁 Importar Excel (2003 / Moderno)</button>
+                    <input type="file" id="inputExcelTomas" style="display:none" accept=".xlsx, .xls, .xml, .csv" onchange="importarExcelTomas(event)">
+                    <button onclick="borrarTodoTomas()" class="btn-danger">Borrar Todo</button>
+                </div>
+            </header>
+
+            <div class="main-grid">
+                <div class="card">
+                    <h2>Panel Resumen</h2>
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">
+                        Sube tu archivo para ver el resumen y la cantidad de tomas realizadas por cada cartero en cada día.
+                    </p>
+                    <div class="live-summary-box">
+                        <div class="live-summary-title">Jornadas Registradas</div>
+                        <div id="liveTotalJornadas" class="live-summary-value">0</div>
+                        <div id="liveTotalRegistros" class="live-summary-sub">Registros únicos: 0</div>
+                    </div>
+
+                    <!-- Gráfico Minimalista por Cartero y Día (Vinculado al filtro) -->
+                    <div class="chart-container">
+                        <div class="chart-title">Tomas por Cartero y Día</div>
+                        <div id="graficoMinimalista">
+                            <div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="padding: 16px; margin-bottom: 20px;">
+                        <label>Filtrar por Cartero, Fecha o Ruta:</label>
+                        <input type="text" id="buscadorT" placeholder="Escribe para buscar..." onkeyup="renderizarTodoTomas()">
+                    </div>
+
+                    <div class="card">
+                        <h2>Reporte Detallado</h2>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Cartero</th>
+                                        <th>Grupo / Ruta</th>
+                                        <th class="text-center">Hora Inicial</th>
+                                        <th class="text-center">Hora Final</th>
+                                        <th class="text-center">Tiempo Total</th>
+                                        <th class="text-center">Cantidad de Tomas</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCuerpoT"></tbody>
+                            </table>
+                            <div id="mensajeVacioT" class="empty">Sube un archivo Excel para ver el reporte.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TRABAJO 3: CONTROL CIERRES Y REAPERTURAS ================= -->
+        <div id="pantallaCierres" class="app-screen">
+            <header>
+                <div>
+                    <h1>Control Cierres y Reaperturas</h1>
+                    <p>Reporte consolidado por cartero y día (Tiempo efectivo total y cantidad de gestiones)</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
+                    <button onclick="document.getElementById('inputExcelCierres').click()" class="btn-success">📁 Importar Excel de Cierres</button>
+                    <input type="file" id="inputExcelCierres" style="display:none" accept=".xlsx, .xls, .xml, .csv" onchange="importarExcelCierres(event)">
+                    <button onclick="borrarTodoCierres()" class="btn-danger">Borrar Todo</button>
+                </div>
+            </header>
+
+            <div class="main-grid">
+                <div class="card">
+                    <h2>Panel Resumen Cierres</h2>
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">
+                        Resumen diario consolidado de tiempo efectivo de trabajo y volumen de cierres/reaperturas.
+                    </p>
+                    <div class="live-summary-box">
+                        <div class="live-summary-title">Jornadas Operativas</div>
+                        <div id="liveTotalCierres" class="live-summary-value">0</div>
+                        <div id="liveTotalRegistrosCierres" class="live-summary-sub">Jornadas agrupadas: 0</div>
+                    </div>
+
+                    <!-- Gráfico Minimalista de Cierres (Vinculado al filtro) -->
+                    <div class="chart-container">
+                        <div class="chart-title">Tiempo Trabajado por Jornada</div>
+                        <div id="graficoCierresMinimalista">
+                            <div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="padding: 16px; margin-bottom: 20px;">
+                        <label>Filtrar por Fecha, Cartero o Código:</label>
+                        <input type="text" id="buscadorCierres" placeholder="Escribe para buscar..." onkeyup="renderizarTodoCierres()">
+                    </div>
+
+                    <div class="card">
+                        <h2>Reporte Consolidado Diario por Cartero</h2>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Cartero (Ejecutor)</th>
+                                        <th>Código</th>
+                                        <th class="text-center">Tiempo Total Trabajado</th>
+                                        <th class="text-center">Cantidad de Cierres y Reaperturas</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCuerpoCierres"></tbody>
+                            </table>
+                            <div id="mensajeVacioCierres" class="empty">Sube un archivo Excel para ver el reporte consolidado.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= FACTURAS ================= -->
+        <div id="pantallaFacturas" class="app-screen">
+            <header>
+                <div><h1>Control Facturas</h1></div>
+                <div><button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú</button></div>
+            </header>
+            <div class="card text-center" style="padding: 40px;"><h2>Módulo Próximamente</h2></div>
+        </div>
+
+        <!-- Pie de página -->
+        <footer class="app-footer">
+            JFS Sistemas • Creado por <strong>Fabricio Sosa</strong> • Versión 1.0 (Estable)
+        </footer>
+
+    </div>
+
+    <!-- Scripts del Sistema -->
+    <script>
+        const catalogoPersonal = {
+            "901100": "Lucero", "901101": "Figueroa", "901102": "Sanchez", "901103": "Velez",
+            "901104": "Mendizabal", "901105": "Roll", "901106": "Vera", "901107": "Fredes",
+            "901108": "Alecha", "901110": "Fernandez", "901119": "Haberkorn", "901120": "Bergonzi", "901121": "Blanco"
+        };
+
+        function formatearNombreProlijo(nombre) {
+            if (!nombre) return "";
+            return nombre.toString().trim().toLowerCase().split(' ').map(palabra => {
+                return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+            }).join(' ');
+        }
+
+        function obtenerCodigoPorNombre(nombreCompleto) {
+            if (!nombreCompleto) return "S/C";
+            let limpio = nombreCompleto.toString().trim().toUpperCase();
+            for (let codigo in catalogoPersonal) {
+                let apellidoCatalogo = catalogoPersonal[codigo].toUpperCase();
+                if (limpio.includes(apellidoCatalogo)) {
+                    return codigo;
+                }
+            }
+            return "S/C";
+        }
+
+        function cambiarPantalla(idPantalla, registrarHistorial = false) {
+            document.getElementById('menuPrincipal').style.display = 'none';
+            document.getElementById('pantallaAvisosDeuda').style.display = 'none';
+            document.getElementById('pantallaTomas').style.display = 'none';
+            document.getElementById('pantallaCierres').style.display = 'none';
+            document.getElementById('pantallaFacturas').style.display = 'none';
+            
+            if (idPantalla === 'menuPrincipal') {
+                document.getElementById('menuPrincipal').style.display = 'flex';
+            } else {
+                document.getElementById(idPantalla).style.display = 'block';
+                if (idPantalla === 'pantallaCierres') {
+                    renderizarTodoCierres();
+                } else if (idPantalla === 'pantallaTomas') {
+                    renderizarTodoTomas();
+                }
+            }
+            
+            window.scrollTo(0,0);
+
+            if (registrarHistorial) {
+                history.pushState({ pantalla: idPantalla }, '', '');
+            }
+        }
+
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.pantalla) {
+                cambiarPantalla(event.state.pantalla, false);
+            } else {
+                cambiarPantalla('menuPrincipal', false);
+            }
+        });
+
+        history.replaceState({ pantalla: 'menuPrincipal' }, '', '');
+
+        function buscarOperario(codigo) {
+            const limpio = codigo ? String(codigo).trim() : '';
+            const inputNombre = document.getElementById('nombreC');
+            const etiquetaAyuda = document.getElementById('nombreDetectadoC');
+            if (catalogoPersonal[limpio]) {
+                inputNombre.value = formatearNombreProlijo(catalogoPersonal[limpio]);
+                etiquetaAyuda.textContent = "✓ Válido: " + inputNombre.value;
+                etiquetaAyuda.style.color = "#059669";
+            } else {
+                inputNombre.value = "";
+                etiquetaAyuda.textContent = limpio.length > 0 ? "❌ Código no autorizado" : "Ej: 901100";
+                etiquetaAyuda.style.color = limpio.length > 0 ? "#e11d48" : "#64748b";
+            }
+        }
+
+        let registrosCarteros = JSON.parse(localStorage.getItem('datosAvisosDeudaMulti')) || [];
+        let resumenTomasTiempos = JSON.parse(localStorage.getItem('datosTomasTiemposJFS')) || [];
+        let resumenCierresReaperturas = JSON.parse(localStorage.getItem('datosCierresReaperturasJFS')) || [];
+
+        document.getElementById('fechaC').valueAsDate = new Date();
+        renderizarTodoCarteros();
+        renderizarTodoTomas();
+        renderizarTodoCierres();
+
+        function guardarRegistro(e) {
+            e.preventDefault();
+            const fecha = document.getElementById('fechaC').value;
+            const codigo = document.getElementById('codigoC').value.trim();
+            const nombre = document.getElementById('nombreC').value.trim();
+
+            if (!catalogoPersonal[codigo]) {
+                alert(`El código "${codigo}" no es válido.`);
+                return;
+            }
+
+            const val1 = parseInt(document.getElementById('val1C').value) || 0;
+            const val2 = parseInt(document.getElementById('val2C').value) || 0;
+            const firmados = parseInt(document.getElementById('valFirmadosC').value) || 0;
+
+            registrosCarteros.push({ fecha, codigo, nombre, val1, val2, firmados });
+            localStorage.setItem('datosAvisosDeudaMulti', JSON.stringify(registrosCarteros));
+            renderizarTodoCarteros();
+            document.getElementById('formCartero').reset();
+            document.getElementById('fechaC').valueAsDate = new Date();
+            document.getElementById('nombreC').value = '';
+            document.getElementById('nombreDetectadoC').textContent = "Ingresa un código válido (Ej: 901100)";
+            document.getElementById('nombreDetectadoC').style.color = "#64748b";
+            alert('¡Registro guardado con éxito!');
+        }
+
+        function renderizarTodoCarteros() {
+            const registros = registrosCarteros || [];
+            const tbody = document.getElementById('tablaCuerpoC');
+            const inputBuscador = document.getElementById('buscadorC');
+            const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
+            
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            const filtrados = registros.filter(reg => {
+                return String(reg.codigo).toLowerCase().includes(texto) || 
+                       String(reg.nombre).toLowerCase().includes(texto) || 
+                       String(reg.fecha).includes(texto);
+            });
+
+            document.getElementById('mensajeVacioC').style.display = filtrados.length === 0 ? 'block' : 'none';
+
+            let sFirmados = 0, sBase = 0;
+            registros.forEach(reg => {
+                const total = (reg.val1 || 0) + (reg.val2 || 0);
+                sFirmados += (reg.firmados || 0);
+                sBase += total;
+            });
+
+            filtrados.forEach((reg) => {
+                const realIdx = registros.indexOf(reg);
+                const total = (reg.val1 || 0) + (reg.val2 || 0);
+                const porc = total > 0 ? ((reg.firmados / total) * 100).toFixed(1) : '0.0';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${reg.fecha}</td>
+                    <td><b>${reg.codigo}</b></td>
+                    <td><b>${formatearNombreProlijo(reg.nombre)}</b></td>
+                    <td class="text-center">${reg.val1}</td>
+                    <td class="text-center">${reg.val2}</td>
+                    <td class="text-center"><b>${total}</b></td>
+                    <td class="text-center" style="color: #059669; font-weight:bold;">${reg.firmados}</td>
+                    <td class="text-center"><span class="badge-porcentaje">${porc}%</span></td>
+                    <td class="text-center"><button onclick="eliminarCartero(${realIdx})" class="btn-delete">Eliminar</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('livePercentageC').textContent = sBase > 0 ? ((sFirmados/sBase)*100).toFixed(1) + '%' : '0.0%';
+            document.getElementById('liveDetailsC').textContent = `Firmados: ${sFirmados} / Total: ${sBase}`;
+        }
+
+        function eliminarCartero(idx) {
+            if(confirm('¿Eliminar registro?')) {
+                registrosCarteros.splice(idx, 1);
+                localStorage.setItem('datosAvisosDeudaMulti', JSON.stringify(registrosCarteros));
+                renderizarTodoCarteros();
+            }
+        }
+
+        function borrarTodoCarteros() {
+            if(confirm('¿Deseas borrar todos los registros de Avisos de Deuda?')) {
+                registrosCarteros = [];
+                localStorage.removeItem('datosAvisosDeudaMulti');
+                renderizarTodoCarteros();
+            }
+        }
+
+        function exportarExcelCarteros() {
+            if (registrosCarteros.length === 0) {
+                alert('No hay registros para exportar.');
+                return;
+            }
+            let html = `<table><tr><th>Fecha</th><th>Código</th><th>Cartero</th><th>1º Aviso</th><th>2º Aviso</th><th>Total Avisos</th><th>Firmados</th><th>% Entregados</th></tr>`;
+            registrosCarteros.forEach(reg => {
+                let total = (reg.val1 || 0) + (reg.val2 || 0);
+                let porc = total > 0 ? ((reg.firmados / total) * 100).toFixed(1) + '%' : '0.0%';
+                html += `<tr><td>${reg.fecha}</td><td>${reg.codigo}</td><td>${formatearNombreProlijo(reg.nombre)}</td><td>${reg.val1}</td><td>${reg.val2}</td><td>${total}</td><td>${reg.firmados}</td><td>${porc}</td></tr>`;
+            });
+            html += `</table>`;
+            let blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'Control_Avisos_Deuda.xls';
+            a.click();
+        }
+
+        function parseExcelDate(val) {
+            if (!val && val !== 0) return null;
+            if (typeof val === 'number') {
+                const utcDays = Math.floor(val - 25569);
+                const utcValue = utcDays * 86400;
+                const dateInfo = new Date(utcValue * 1000);
+                const fractionalDay = val - Math.floor(val);
+                let totalSeconds = Math.floor(fractionalDay * 86400);
+                const hours = Math.floor(totalSeconds / 3600);
+                totalSeconds %= 3600;
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                dateInfo.setUTCHours(hours, minutes, seconds);
+                return dateInfo;
+            } else {
+                let str = String(val).trim();
+                if (str.includes('/')) {
+                    let parts = str.split(' ');
+                    let dateParts = parts[0].split('/');
+                    if (dateParts.length === 3) {
+                        let timePart = parts[1] || '00:00:00';
+                        return new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T${timePart}`);
+                    }
+                }
+                let d = new Date(str);
+                return isNaN(d) ? null : d;
+            }
+        }
+
+        function importarExcelTomas(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    processJSONRowsTomas(jsonData);
+                } catch (err) {
+                    alert('Error al procesar el archivo Excel: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            event.target.value = '';
+        }
+
+        function processJSONRowsTomas(jsonData) {
+            if (jsonData.length < 2) {
+                alert('El archivo no contiene suficientes filas.');
+                return;
+            }
+
+            let colRuta = 0;
+            let colFecha = 1;
+            let colCartero = 2;
+
+            const headers = jsonData[0].map(h => h ? String(h).trim().toLowerCase() : '');
+            headers.forEach((h, idx) => {
+                if (h.includes('ruta')) colRuta = idx;
+                if (h.includes('fecha') || h.includes('hora')) colFecha = idx;
+                if (h.includes('cartero') || h.includes('operario')) colCartero = idx;
+            });
+
+            const agrupadorMap = {};
+            let totalFilasValidas = 0;
+
+            for (let i = 1; i < jsonData.length; i++) {
+                let row = jsonData[i];
+                if (!row || row.length === 0) continue;
+
+                let rutaRaw = row[colRuta] ? String(row[colRuta]).trim() : '';
+                let fechaRaw = row[colFecha];
+                let carteroCodigo = row[colCartero] ? String(row[colCartero]).trim() : '';
+
+                if (!rutaRaw || fechaRaw === undefined || fechaRaw === '' || !carteroCodigo) continue;
+                totalFilasValidas++;
+
+                if (carteroCodigo.length === 3 && carteroCodigo.startsWith('1')) {
+                    carteroCodigo = '901' + carteroCodigo;
+                }
+                let carteroNombre = formatearNombreProlijo(catalogoPersonal[carteroCodigo] || carteroCodigo);
+
+                let parsedDate = parseExcelDate(fechaRaw);
+                if (!parsedDate || isNaN(parsedDate)) continue;
+
+                let soloFecha = parsedDate.toLocaleDateString('es-AR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                let claveGrupo = `${carteroCodigo}_${rutaRaw}_${soloFecha}`;
+
+                if (!agrupadorMap[claveGrupo]) {
+                    let yyyy = parsedDate.getFullYear();
+                    let mm = String(parsedDate.getMonth() + 1).padStart(2, '0');
+                    let dd = String(parsedDate.getDate()).padStart(2, '0');
+                    let sortKeyNum = parseInt(`${yyyy}${mm}${dd}`, 10);
+
+                    agrupadorMap[claveGrupo] = {
+                        carteroOrden: carteroCodigo,
+                        carteroTexto: `${carteroCodigo} - ${carteroNombre}`,
+                        carteroSoloNombre: carteroNombre,
+                        ruta: rutaRaw,
+                        fechaStr: soloFecha,
+                        sortKey: sortKeyNum,
+                        timestamps: [],
+                        cantidadTomas: 0
+                    };
+                }
+
+                agrupadorMap[claveGrupo].timestamps.push(parsedDate);
+                agrupadorMap[claveGrupo].cantidadTomas++;
+            }
+
+            resumenTomasTiempos = [];
+            Object.keys(agrupadorMap).forEach(k => {
+                let grupo = agrupadorMap[k];
+                grupo.timestamps.sort((a, b) => a - b);
+
+                let minDate = grupo.timestamps[0];
+                let maxDate = grupo.timestamps[grupo.timestamps.length - 1];
+
+                let hInicio = minDate ? minDate.toTimeString().split(' ')[0] : '00:00:00';
+                let hFin = maxDate ? maxDate.toTimeString().split(' ')[0] : '00:00:00';
+
+                let tiempoEfectivo = "0h 0m 0s";
+                if (minDate && maxDate) {
+                    let diffMs = maxDate - minDate;
+                    let diffHrs = Math.floor(diffMs / 3600000);
+                    let diffMins = Math.floor((diffMs % 3600000) / 60000);
+                    let diffSecs = Math.floor((diffMs % 60000) / 1000);
+                    tiempoEfectivo = `${diffHrs}h ${diffMins}m ${diffSecs}s`;
+                }
+
+                resumenTomasTiempos.push({
+                    carteroOrden: grupo.carteroOrden,
+                    cartero: grupo.carteroTexto,
+                    carteroSoloNombre: grupo.carteroSoloNombre,
+                    fecha: grupo.fechaStr,
+                    sortKey: grupo.sortKey,
+                    ruta: grupo.ruta,
+                    horaInicio: hInicio,
+                    horaFin: hFin,
+                    tiempoEfectivo: tiempoEfectivo,
+                    cantidadTomas: grupo.cantidadTomas
+                });
+            });
+
+            resumenTomasTiempos.sort((a, b) => {
+                if (a.sortKey !== b.sortKey) return a.sortKey - b.sortKey;
+                if (a.carteroOrden !== b.carteroOrden) return a.carteroOrden.localeCompare(b.carteroOrden);
+                return a.ruta.localeCompare(b.ruta);
+            });
+
+            localStorage.setItem('datosTomasTiemposJFS', JSON.stringify(resumenTomasTiempos));
+            renderizarTodoTomas();
+            alert(`¡Importación exitosa! Se procesaron ${totalFilasValidas} registros correctamente.`);
+        }
+
+        function renderizarTodoTomas() {
+            const inputBuscador = document.getElementById('buscadorT');
+            const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
+            const tbody = document.getElementById('tablaCuerpoT');
+            const mensajeVacio = document.getElementById('mensajeVacioT');
+            const contenedorGrafico = document.getElementById('graficoMinimalista');
+            
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const filtrados = (resumenTomasTiempos || []).filter(r => {
+                return r.cartero.toLowerCase().includes(texto) || r.ruta.toLowerCase().includes(texto) || r.fecha.includes(texto);
+            });
+
+            mensajeVacio.style.display = filtrados.length === 0 ? 'block' : 'none';
+            document.getElementById('liveTotalJornadas').textContent = resumenTomasTiempos.length;
+            document.getElementById('liveTotalRegistros').textContent = `Registros únicos: ${resumenTomasTiempos.length}`;
+
+            filtrados.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${r.fecha}</b></td>
+                    <td><strong>${r.cartero}</strong></td>
+                    <td><code>${r.ruta}</code></td>
+                    <td class="text-center" style="color: #2563eb; font-weight: bold;">${r.horaInicio}</td>
+                    <td class="text-center" style="color: #059669; font-weight: bold;">${r.horaFin}</td>
+                    <td class="text-center"><b>${r.tiempoEfectivo}</b></td>
+                    <td class="text-center"><span class="badge-tomas">${r.cantidadTomas} tomas</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (filtrados.length === 0) {
+                contenedorGrafico.innerHTML = `<div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>`;
+            } else {
+                const carteroFechaMap = {};
+                filtrados.forEach(item => {
+                    let llave = `${item.carteroSoloNombre} (${item.fecha})`;
+                    carteroFechaMap[llave] = (carteroFechaMap[llave] || 0) + item.cantidadTomas;
+                });
+
+                let maxTomas = Math.max(...Object.values(carteroFechaMap), 1);
+                let htmlGrafico = '';
+
+                Object.keys(carteroFechaMap).forEach(llave => {
+                    let total = carteroFechaMap[llave];
+                    let porcentaje = Math.round((total / maxTomas) * 100);
+                    if (porcentaje < 5) porcentaje = 5;
+
+                    htmlGrafico += `
+                        <div class="chart-bar-row">
+                            <div class="chart-label" title="${llave}">${llave}</div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar-fill" style="width: ${porcentaje}%;"></div>
+                            </div>
+                            <div class="chart-value">${total}</div>
+                        </div>
+                    `;
+                });
+                contenedorGrafico.innerHTML = htmlGrafico;
+            }
+        }
+
+        function borrarTodoTomas() {
+            if (confirm('¿Deseas borrar los datos guardados de Tomas de Estado?')) {
+                resumenTomasTiempos = [];
+                localStorage.removeItem('datosTomasTiemposJFS');
+                renderizarTodoTomas();
+            }
+        }
+
+        // ================= LÓGICA MÓDULO 3: CIERRES Y REAPERTURAS =================
+        function importarExcelCierres(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    processJSONRowsCierres(jsonData);
+                } catch (err) {
+                    alert('Error al procesar el archivo Excel de Cierres: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            event.target.value = '';
+        }
+
+        function processJSONRowsCierres(jsonData) {
+            if (jsonData.length < 2) {
+                alert('El archivo de cierres no contiene suficientes filas.');
+                return;
+            }
+
+            let colTipo = 0;
+            let colEjecutor = 1;
+            let colInicio = 2;
+            let colFin = 3;
+
+            const headers = jsonData[0].map(h => h ? String(h).trim().toLowerCase() : '');
+            headers.forEach((h, idx) => {
+                if (h.includes('tipo')) colTipo = idx;
+                if (h.includes('ejecutor') || h.includes('cartero')) colEjecutor = idx;
+                if (h.includes('inicio')) colInicio = idx;
+                if (h.includes('fin')) colFin = idx;
+            });
+
+            const agrupadorCierresMap = {};
+            let totalFilasValidas = 0;
+
+            for (let i = 1; i < jsonData.length; i++) {
+                let row = jsonData[i];
+                if (!row || row.length === 0) continue;
+
+                let ejecutorVal = row[colEjecutor] ? formatearNombreProlijo(String(row[colEjecutor])) : '';
+                let inicioRaw = row[colInicio];
+                let finRaw = row[colFin];
+
+                if (!ejecutorVal || inicioRaw === undefined || inicioRaw === '') continue;
+
+                let dateInicio = parseExcelDate(inicioRaw);
+                let dateFin = parseExcelDate(finRaw);
+
+                if (!dateInicio || isNaN(dateInicio)) continue;
+                totalFilasValidas++;
+
+                let soloFecha = dateInicio.toLocaleDateString('es-AR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                let codigoCartero = obtenerCodigoPorNombre(ejecutorVal);
+                
+                let claveDiaCartero = `${ejecutorVal}_${soloFecha}`;
+
+                if (!agrupadorCierresMap[claveDiaCartero]) {
+                    let yyyy = dateInicio.getFullYear();
+                    let mm = String(dateInicio.getMonth() + 1).padStart(2, '0');
+                    let dd = String(dateInicio.getDate()).padStart(2, '0');
+                    let sortKeyNum = parseInt(`${yyyy}${mm}${dd}`, 10);
+
+                    agrupadorCierresMap[claveDiaCartero] = {
+                        fecha: soloFecha,
+                        cartero: ejecutorVal,
+                        carteroSoloNombre: ejecutorVal.split(' ')[0],
+                        codigo: codigoCartero,
+                        sortKey: sortKeyNum,
+                        totalMs: 0,
+                        cantidadGestiones: 0
+                    };
+                }
+
+                if (dateFin && !isNaN(dateFin) && dateFin >= dateInicio) {
+                    let duracionFilaMs = dateFin - dateInicio;
+                    if (duracionFilaMs <= 30 * 60 * 1000) {
+                        agrupadorCierresMap[claveDiaCartero].totalMs += duracionFilaMs;
+                    }
+                }
+                agrupadorCierresMap[claveDiaCartero].cantidadGestiones++;
+            }
+
+            let listaConsolidada = [];
+            Object.keys(agrupadorCierresMap).forEach(k => {
+                let item = agrupadorCierresMap[k];
+
+                let diffMs = item.totalMs;
+                let diffHrs = Math.floor(diffMs / 3600000);
+                let diffMins = Math.floor((diffMs % 3600000) / 60000);
+                let diffSecs = Math.floor((diffMs % 60000) / 1000);
+                let tiempoEfectivoTotal = `${diffHrs}h ${diffMins}m ${diffSecs}s`;
+
+                listaConsolidada.push({
+                    fecha: item.fecha,
+                    cartero: item.cartero,
+                    carteroSoloNombre: item.carteroSoloNombre,
+                    codigo: item.codigo,
+                    tiempoEfectivo: tiempoEfectivoTotal,
+                    totalMs: item.totalMs,
+                    cantidadGestiones: item.cantidadGestiones,
+                    sortKey: item.sortKey
+                });
+            });
+
+            listaConsolidada.sort((a, b) => b.sortKey - a.sortKey || a.cartero.localeCompare(b.cartero));
+
+            resumenCierresReaperturas = listaConsolidada;
+            localStorage.setItem('datosCierresReaperturasJFS', JSON.stringify(resumenCierresReaperturas));
+            renderizarTodoCierres();
+            alert(`¡Consolidación exitosa! Se procesaron ${totalFilasValidas} gestiones en ${resumenCierresReaperturas.length} jornadas.`);
+        }
+
+        function renderizarTodoCierres() {
+            const inputBuscador = document.getElementById('buscadorCierres');
+            const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
+            const tbody = document.getElementById('tablaCuerpoCierres');
+            const mensajeVacio = document.getElementById('mensajeVacioCierres');
+            const contenedorGrafico = document.getElementById('graficoCierresMinimalista');
+            
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const filtrados = (resumenCierresReaperturas || []).filter(r => {
+                return r.cartero.toLowerCase().includes(texto) || r.codigo.toLowerCase().includes(texto) || r.fecha.includes(texto);
+            });
+
+            mensajeVacio.style.display = filtrados.length === 0 ? 'block' : 'none';
+            document.getElementById('liveTotalCierres').textContent = resumenCierresReaperturas.length;
+            document.getElementById('liveTotalRegistrosCierres').textContent = `Jornadas agrupadas: ${resumenCierresReaperturas.length}`;
+
+            filtrados.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${r.fecha}</b></td>
+                    <td><strong>${formatearNombreProlijo(r.cartero)}</strong></td>
+                    <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;">${r.codigo}</span></td>
+                    <td class="text-center" style="color: #2563eb; font-weight: bold;">${r.tiempoEfectivo}</td>
+                    <td class="text-center"><span class="badge-tomas">${r.cantidadGestiones} gestiones</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (filtrados.length === 0) {
+                contenedorGrafico.innerHTML = `<div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>`;
+            } else {
+                let maxMs = Math.max(...filtrados.map(i => i.totalMs), 1);
+                let htmlGrafico = '';
+
+                filtrados.forEach(item => {
+                    let porcentaje = Math.round((item.totalMs / maxMs) * 100);
+                    if (porcentaje < 5 && item.totalMs > 0) porcentaje = 5;
+
+                    let etiquetaGrafico = `${formatearNombreProlijo(item.carteroSoloNombre)} (${item.fecha})`;
+                    let horasTotalesStr = (item.totalMs / 3600000).toFixed(1) + ' hrs';
+
+                    htmlGrafico += `
+                        <div class="chart-bar-row">
+                            <div class="chart-label" title="${etiquetaGrafico}">${etiquetaGrafico}</div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar-fill" style="width: ${porcentaje}%;"></div>
+                            </div>
+                            <div class="chart-value">${horasTotalesStr}</div>
+                        </div>
+                    `;
+                });
+                contenedorGrafico.innerHTML = htmlGrafico;
+            }
+        }
+
+        function borrarTodoCierres() {
+            if (confirm('¿Deseas borrar los datos guardados de Cierres y Reaperturas?')) {
+                resumenCierresReaperturas = [];
+                localStorage.removeItem('datosCierresReaperturasJFS');
+                renderizarTodoCierres();
+            }
+        }
+    </script>
+</body>
+</html>
