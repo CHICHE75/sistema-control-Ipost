@@ -10,7 +10,7 @@
         * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
             color: #1e293b;
             margin: 0;
             padding: 20px;
@@ -29,44 +29,56 @@
             background: white;
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px -3px rgba(90, 35, 59, 0.15);
             text-align: center;
             max-width: 520px;
             width: 100%;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #f1f5f9;
         }
-        .menu-card h1 { font-size: 24px; color: #0f172a; margin-bottom: 10px; }
+        .menu-logo {
+            max-width: 160px;
+            height: auto;
+            margin-bottom: 16px;
+        }
+        .menu-card h1 { font-size: 24px; color: #5a233b; margin-bottom: 8px; }
         .version-badge {
             display: inline-block;
-            background: #e0f2fe;
-            color: #0369a1;
+            background: #fdf2f4;
+            color: #5a233b;
             font-size: 11px;
             font-weight: 700;
             padding: 3px 10px;
             border-radius: 12px;
             margin-bottom: 16px;
+            border: 1px solid #fbcfe8;
         }
+        
+        /* Botones unificados con la tonalidad del logo Inter Post */
         .btn-menu {
             display: block;
             width: 100%;
             padding: 14px;
             margin-bottom: 12px;
-            background: #2563eb;
+            background: #5a233b; /* Bordó institucional */
             color: white;
             font-weight: 600;
             font-size: 15px;
             border-radius: 10px;
             border: none;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
-        .btn-menu:hover { background: #1d4ed8; }
-        .btn-menu-secondary { background: #059669; }
-        .btn-menu-secondary:hover { background: #047857; }
-        .btn-menu-tertiary { background: #7c3aed; }
-        .btn-menu-tertiary:hover { background: #6d28d9; }
-        .btn-menu-quaternary { background: #d97706; }
-        .btn-menu-quaternary:hover { background: #b45309; }
+        .btn-menu:hover { background: #451b2d; }
+        
+        /* Variaciones armónicas manteniendo la línea institucional */
+        .btn-menu-secondary { background: #6d2839; }
+        .btn-menu-secondary:hover { background: #521d2a; }
+        .btn-menu-tertiary { background: #831843; }
+        .btn-menu-tertiary:hover { background: #500f28; }
+        .btn-menu-quaternary { background: #9f1239; }
+        .btn-menu-quaternary:hover { background: #700d27; }
+        .btn-menu-dark { background: #3b1424; }
+        .btn-menu-dark:hover { background: #230b15; }
 
         /* Estilos generales de las pantallas de trabajo */
         .app-screen { display: none; }
@@ -75,7 +87,7 @@
             background: #ffffff;
             padding: 22px 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -84,7 +96,7 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        h1 { font-size: 22px; margin: 0; color: #0f172a; }
+        h1 { font-size: 22px; margin: 0; color: #5a233b; }
         p { margin: 4px 0 0 0; color: #64748b; font-size: 13px; }
         
         .main-grid {
@@ -100,14 +112,14 @@
             background: #ffffff;
             padding: 22px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
             margin-bottom: 24px;
         }
         .card h2 { 
             font-size: 16px; 
             margin-top: 0; 
-            color: #0f172a; 
+            color: #5a233b; 
             border-bottom: 2px solid #f1f5f9; 
             padding-bottom: 10px; 
             margin-bottom: 16px;
@@ -124,7 +136,7 @@
             background: #f8fafc;
             transition: all 0.2s;
         }
-        input:focus { outline: none; border-color: #2563eb; background: #fff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        input:focus { outline: none; border-color: #5a233b; background: #fff; box-shadow: 0 0 0 3px rgba(90, 35, 59, 0.1); }
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         button {
@@ -136,22 +148,18 @@
             border: none;
             transition: background 0.2s;
         }
-        .btn-primary { width: 100%; background: #2563eb; color: white; margin-top: 6px; padding: 12px; }
-        .btn-primary:hover { background: #1d4ed8; }
-        .btn-success { background: #059669; color: white; }
-        .btn-success:hover { background: #047857; }
-        .btn-warning { background: #d97706; color: white; }
-        .btn-warning:hover { background: #b45309; }
+        .btn-primary { width: 100%; background: #5a233b; color: white; margin-top: 6px; padding: 12px; }
+        .btn-primary:hover { background: #451b2d; }
+        .btn-success { background: #047857; color: white; }
+        .btn-success:hover { background: #065f46; }
         .btn-danger { background: #e11d48; color: white; }
         .btn-danger:hover { background: #be123c; }
-        .btn-delete { background: #fee2e2; color: #dc2626; padding: 6px 10px; font-size: 11px; border-radius: 6px; }
-        .btn-delete:hover { background: #fecdd3; }
         .btn-volver { background: #64748b; color: white; }
         .btn-volver:hover { background: #475569; }
 
         .live-summary-box {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 1px solid #bbf7d0;
+            background: linear-gradient(135deg, #fdf2f4 0%, #fae8ef 100%);
+            border: 1px solid #fbcfe8;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
@@ -161,69 +169,18 @@
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            color: #166534;
+            color: #831843;
             margin-bottom: 5px;
         }
         .live-summary-value {
             font-size: 24px;
             font-weight: 800;
-            color: #15803d;
+            color: #5a233b;
         }
         .live-summary-sub {
             font-size: 12px;
-            color: #166534;
+            color: #831843;
             margin-top: 4px;
-        }
-
-        /* Estilos del Gráfico Minimalista */
-        .chart-container {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px dashed #cbd5e1;
-            max-height: 380px;
-            overflow-y: auto;
-        }
-        .chart-title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #475569;
-            margin-bottom: 12px;
-        }
-        .chart-bar-row {
-            display: flex;
-            align-items: center;
-            font-size: 11px;
-            margin-bottom: 6px;
-            gap: 6px;
-        }
-        .chart-label {
-            width: 130px;
-            color: #334155;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .chart-bar-wrapper {
-            flex-grow: 1;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            height: 12px;
-        }
-        .chart-bar-fill {
-            background: #7c3aed;
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.4s ease;
-        }
-        .chart-value {
-            width: 55px;
-            text-align: right;
-            font-weight: 700;
-            color: #1e293b;
-            font-size: 11px;
         }
 
         .table-responsive { overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; }
@@ -240,24 +197,15 @@
         td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; }
         tbody tr:hover { background: #f8fafc; }
 
-        .badge-tomas {
-            background-color: #f1f5f9;
-            color: #0f172a;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 12px;
-            border: 1px solid #cbd5e1;
-        }
         .badge-porcentaje {
-            background-color: #eff6ff;
-            color: #1d4ed8;
+            background-color: #fdf2f4;
+            color: #831843;
             padding: 6px 12px;
             border-radius: 20px;
             font-weight: 700;
             font-size: 12px;
             display: inline-block;
-            border: 1px solid #bfdbfe;
+            border: 1px solid #fbcfe8;
         }
         .text-center { text-align: center; }
         .empty { text-align: center; color: #94a3b8; padding: 30px; font-style: italic; }
@@ -279,6 +227,9 @@
         <!-- ================= MENÚ PRINCIPAL ================= -->
         <div id="menuPrincipal">
             <div class="menu-card">
+                <!-- LOGO INSTITUCIONAL INTER POST -->
+                <img src="logo.png" alt="Inter Post Logo" class="menu-logo">
+                
                 <span class="version-badge">Versión 1.0 (Estable)</span>
                 <h1>JFS Sistemas</h1>
                 <p style="margin-top: -5px; margin-bottom: 20px; color: #64748b;">Selecciona el módulo de trabajo que deseas abrir:</p>
@@ -287,6 +238,7 @@
                 <button class="btn-menu btn-menu-secondary" onclick="cambiarPantalla('pantallaTomas', true)">⚡ Control Tomas de Estado</button>
                 <button class="btn-menu btn-menu-tertiary" onclick="cambiarPantalla('pantallaCierres', true)">🔄 Control Cierres y Reaperturas</button>
                 <button class="btn-menu btn-menu-quaternary" onclick="cambiarPantalla('pantallaFacturas', true)">📄 Control Facturas</button>
+                <button class="btn-menu btn-menu-dark" onclick="cambiarPantalla('pantallaResumenGeneral', true)">📊 Resumen Diario por Cartero</button>
             </div>
         </div>
 
@@ -381,12 +333,12 @@
         <div id="pantallaTomas" class="app-screen">
             <header>
                 <div>
-                    <h1>Control Tomas de Estado - Gráfico por Cartero y Día</h1>
+                    <h1>Control Tomas de Estado</h1>
                     <p>Reporte cronológico y volumen de tomas desglosado por cartero y fecha</p>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
-                    <button onclick="document.getElementById('inputExcelTomas').click()" class="btn-success">📁 Importar Excel (2003 / Moderno)</button>
+                    <button onclick="document.getElementById('inputExcelTomas').click()" class="btn-success">📁 Importar Excel</button>
                     <input type="file" id="inputExcelTomas" style="display:none" accept=".xlsx, .xls, .xml, .csv" onchange="importarExcelTomas(event)">
                     <button onclick="borrarTodoTomas()" class="btn-danger">Borrar Todo</button>
                 </div>
@@ -394,22 +346,11 @@
 
             <div class="main-grid">
                 <div class="card">
-                    <h2>Panel Resumen</h2>
-                    <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">
-                        Sube tu archivo para ver el resumen y la cantidad de tomas realizadas por cada cartero en cada día.
-                    </p>
+                    <h2>Panel Resumen Tomas</h2>
                     <div class="live-summary-box">
                         <div class="live-summary-title">Jornadas Registradas</div>
                         <div id="liveTotalJornadas" class="live-summary-value">0</div>
                         <div id="liveTotalRegistros" class="live-summary-sub">Registros únicos: 0</div>
-                    </div>
-
-                    <!-- Gráfico Minimalista por Cartero y Día (Vinculado al filtro) -->
-                    <div class="chart-container">
-                        <div class="chart-title">Tomas por Cartero y Día</div>
-                        <div id="graficoMinimalista">
-                            <div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>
-                        </div>
                     </div>
                 </div>
 
@@ -448,11 +389,11 @@
             <header>
                 <div>
                     <h1>Control Cierres y Reaperturas</h1>
-                    <p>Reporte consolidado por cartero y día (Tiempo efectivo total y cantidad de gestiones)</p>
+                    <p>Reporte consolidado por cartero y día</p>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
-                    <button onclick="document.getElementById('inputExcelCierres').click()" class="btn-success">📁 Importar Excel de Cierres</button>
+                    <button onclick="document.getElementById('inputExcelCierres').click()" class="btn-success">📁 Importar Excel Cierres</button>
                     <input type="file" id="inputExcelCierres" style="display:none" accept=".xlsx, .xls, .xml, .csv" onchange="importarExcelCierres(event)">
                     <button onclick="borrarTodoCierres()" class="btn-danger">Borrar Todo</button>
                 </div>
@@ -461,21 +402,10 @@
             <div class="main-grid">
                 <div class="card">
                     <h2>Panel Resumen Cierres</h2>
-                    <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">
-                        Resumen diario consolidado de tiempo efectivo de trabajo y volumen de cierres/reaperturas.
-                    </p>
                     <div class="live-summary-box">
                         <div class="live-summary-title">Jornadas Operativas</div>
                         <div id="liveTotalCierres" class="live-summary-value">0</div>
                         <div id="liveTotalRegistrosCierres" class="live-summary-sub">Jornadas agrupadas: 0</div>
-                    </div>
-
-                    <!-- Gráfico Minimalista de Cierres (Vinculado al filtro) -->
-                    <div class="chart-container">
-                        <div class="chart-title">Tiempo Trabajado por Jornada</div>
-                        <div id="graficoCierresMinimalista">
-                            <div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>
-                        </div>
                     </div>
                 </div>
 
@@ -507,13 +437,110 @@
             </div>
         </div>
 
-        <!-- ================= FACTURAS ================= -->
+        <!-- ================= TRABAJO 4: CONTROL FACTURAS ================= -->
         <div id="pantallaFacturas" class="app-screen">
             <header>
-                <div><h1>Control Facturas</h1></div>
-                <div><button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú</button></div>
+                <div>
+                    <h1>Control Facturas</h1>
+                    <p>Módulo de gestión y efectividad de entrega de facturas</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
+                    <button onclick="exportarExcelFacturas()" class="btn-success">Exportar a Excel (.xls)</button>
+                </div>
             </header>
-            <div class="card text-center" style="padding: 40px;"><h2>Módulo Próximamente</h2></div>
+
+            <div class="main-grid">
+                <div class="card">
+                    <h2>Cargar Tarea</h2>
+                    <form id="formFacturas" onsubmit="guardarRegistroFacturas(event)">
+                        <div class="form-group">
+                            <label>Grupo / Ruta (Ej: G1, G51, G2, G4... G32)</label>
+                            <input type="text" id="rutaF" required placeholder="Ej: G1, G51 o G2 (pares hasta 32)">
+                            <div style="font-size: 11px; margin-top: 4px; font-weight: 600; color: #64748b;">Permite G1, G51 o G + número par (2 al 32)</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Entrega</label>
+                            <input type="date" id="fechaF" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Código de Cartero</label>
+                            <input type="text" id="codigoF" required placeholder="Ej: 901100" oninput="buscarOperarioFacturas(this.value)">
+                            <div id="nombreDetectadoF" class="codigo-ayuda" style="font-size: 11px; margin-top: 4px; font-weight: 600;">Ingresa un código válido (Ej: 901100)</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre del Cartero</label>
+                            <input type="text" id="nombreF" required readonly placeholder="Se completa automáticamente" style="background: #e2e8f0; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label>Facturas</label>
+                            <input type="number" id="valFacturasF" min="0" required placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad Repartida</label>
+                            <input type="number" id="valRepartidasF" min="0" required placeholder="0">
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Registro</button>
+                    </form>
+
+                    <div class="live-summary-box">
+                        <div class="live-summary-title">Efectividad Total General (Facturas)</div>
+                        <div id="livePercentageF" class="live-summary-value">0.0%</div>
+                        <div id="liveDetailsF" class="live-summary-sub">Repartidas: 0 / Total Facturas: 0</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="padding: 16px; margin-bottom: 20px;">
+                        <label>Buscar por Ruta, Código, Nombre o Fecha:</label>
+                        <input type="text" id="buscadorFacturas" placeholder="Escribe para filtrar registros..." onkeyup="renderizarTodoFacturas()">
+                    </div>
+
+                    <div class="card">
+                        <h2>Detalle de Operaciones Individuales</h2>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Grupo / Ruta</th>
+                                        <th>Código</th>
+                                        <th>Cartero</th>
+                                        <th class="text-center">Facturas</th>
+                                        <th class="text-center">Repartidas</th>
+                                        <th class="text-center">% Entregadas</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCuerpoFacturas"></tbody>
+                            </table>
+                            <div id="mensajeVacioFacturas" class="empty">No hay registros de facturas cargados actualmente.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TRABAJO 5: RESUMEN DIARIO POR CARTERO ================= -->
+        <div id="pantallaResumenGeneral" class="app-screen">
+            <header>
+                <div>
+                    <h1>Resumen Diario por Cartero</h1>
+                    <p>Consolidado general de operaciones y rendimiento diario</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
+                </div>
+            </header>
+
+            <div class="card">
+                <h2>Próximo Módulo de Consolidación</h2>
+                <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
+                    Este espacio está reservado para integrar y cruzar los datos de todos los módulos anteriores en un solo reporte diario por cartero. 
+                </p>
+                <div class="empty" style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: 50px;">
+                    Espacio listo para configurar los parámetros y métricas que necesites mostrar aquí. ¡Indícame cómo lo armamos!
+                </div>
+            </div>
         </div>
 
         <!-- Pie de página -->
@@ -556,6 +583,7 @@
             document.getElementById('pantallaTomas').style.display = 'none';
             document.getElementById('pantallaCierres').style.display = 'none';
             document.getElementById('pantallaFacturas').style.display = 'none';
+            document.getElementById('pantallaResumenGeneral').style.display = 'none';
             
             if (idPantalla === 'menuPrincipal') {
                 document.getElementById('menuPrincipal').style.display = 'flex';
@@ -565,6 +593,8 @@
                     renderizarTodoCierres();
                 } else if (idPantalla === 'pantallaTomas') {
                     renderizarTodoTomas();
+                } else if (idPantalla === 'pantallaFacturas') {
+                    renderizarTodoFacturas();
                 }
             }
             
@@ -592,7 +622,22 @@
             if (catalogoPersonal[limpio]) {
                 inputNombre.value = formatearNombreProlijo(catalogoPersonal[limpio]);
                 etiquetaAyuda.textContent = "✓ Válido: " + inputNombre.value;
-                etiquetaAyuda.style.color = "#059669";
+                etiquetaAyuda.style.color = "#047857";
+            } else {
+                inputNombre.value = "";
+                etiquetaAyuda.textContent = limpio.length > 0 ? "❌ Código no autorizado" : "Ej: 901100";
+                etiquetaAyuda.style.color = limpio.length > 0 ? "#e11d48" : "#64748b";
+            }
+        }
+
+        function buscarOperarioFacturas(codigo) {
+            const limpio = codigo ? String(codigo).trim() : '';
+            const inputNombre = document.getElementById('nombreF');
+            const etiquetaAyuda = document.getElementById('nombreDetectadoF');
+            if (catalogoPersonal[limpio]) {
+                inputNombre.value = formatearNombreProlijo(catalogoPersonal[limpio]);
+                etiquetaAyuda.textContent = "✓ Válido: " + inputNombre.value;
+                etiquetaAyuda.style.color = "#047857";
             } else {
                 inputNombre.value = "";
                 etiquetaAyuda.textContent = limpio.length > 0 ? "❌ Código no autorizado" : "Ej: 901100";
@@ -603,11 +648,14 @@
         let registrosCarteros = JSON.parse(localStorage.getItem('datosAvisosDeudaMulti')) || [];
         let resumenTomasTiempos = JSON.parse(localStorage.getItem('datosTomasTiemposJFS')) || [];
         let resumenCierresReaperturas = JSON.parse(localStorage.getItem('datosCierresReaperturasJFS')) || [];
+        let registrosFacturas = JSON.parse(localStorage.getItem('datosFacturasJFS')) || [];
 
         document.getElementById('fechaC').valueAsDate = new Date();
+        document.getElementById('fechaF').valueAsDate = new Date();
         renderizarTodoCarteros();
         renderizarTodoTomas();
         renderizarTodoCierres();
+        renderizarTodoFacturas();
 
         function guardarRegistro(e) {
             e.preventDefault();
@@ -672,7 +720,7 @@
                     <td class="text-center">${reg.val1}</td>
                     <td class="text-center">${reg.val2}</td>
                     <td class="text-center"><b>${total}</b></td>
-                    <td class="text-center" style="color: #059669; font-weight:bold;">${reg.firmados}</td>
+                    <td class="text-center" style="color: #047857; font-weight:bold;">${reg.firmados}</td>
                     <td class="text-center"><span class="badge-porcentaje">${porc}%</span></td>
                     <td class="text-center"><button onclick="eliminarCartero(${realIdx})" class="btn-delete">Eliminar</button></td>
                 `;
@@ -719,6 +767,116 @@
             a.click();
         }
 
+        // ================= VALIDACIÓN Y LÓGICA MÓDULO FACTURAS =================
+        function validarGrupoRutaFactura(valor) {
+            let limpio = valor.trim().toUpperCase();
+            if (limpio === "G1" || limpio === "G51") return true;
+            let match = limpio.match(/^G(\d+)$/);
+            if (match) {
+                let num = parseInt(match[1], 10);
+                return num >= 2 && num <= 32 && (num % 2 === 0);
+            }
+            return false;
+        }
+
+        function guardarRegistroFacturas(e) {
+            e.preventDefault();
+            const ruta = document.getElementById('rutaF').value.trim();
+            
+            if (!validarGrupoRutaFactura(ruta)) {
+                alert('Error en Grupo / Ruta: Debe ser "G1", "G51" o la letra "G" seguida de un número par del 2 al 32 (Ej: G2, G4... G32).');
+                return;
+            }
+
+            const fecha = document.getElementById('fechaF').value;
+            const codigo = document.getElementById('codigoF').value.trim();
+            const nombre = document.getElementById('nombreF').value.trim();
+
+            if (!catalogoPersonal[codigo]) {
+                alert(`El código "${codigo}" no es válido.`);
+                return;
+            }
+
+            const totalFacturas = parseInt(document.getElementById('valFacturasF').value) || 0;
+            const repartidas = parseInt(document.getElementById('valRepartidasF').value) || 0;
+
+            registrosFacturas.push({ ruta: ruta.toUpperCase(), fecha, codigo, nombre, totalFacturas, repartidas });
+            localStorage.setItem('datosFacturasJFS', JSON.stringify(registrosFacturas));
+            renderizarTodoFacturas();
+            document.getElementById('formFacturas').reset();
+            document.getElementById('fechaF').valueAsDate = new Date();
+            document.getElementById('nombreF').value = '';
+            document.getElementById('nombreDetectadoF').textContent = "Ingresa un código válido (Ej: 901100)";
+            document.getElementById('nombreDetectadoF').style.color = "#64748b";
+            alert('¡Registro de factura guardado con éxito!');
+        }
+
+        function renderizarTodoFacturas() {
+            const registros = registrosFacturas || [];
+            const tbody = document.getElementById('tablaCuerpoFacturas');
+            const inputBuscador = document.getElementById('buscadorFacturas');
+            const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
+            
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            const filtrados = registros.filter(reg => {
+                return String(reg.ruta).toLowerCase().includes(texto) || 
+                       String(reg.codigo).toLowerCase().includes(texto) || 
+                       String(reg.nombre).toLowerCase().includes(texto) || 
+                       String(reg.fecha).includes(texto);
+            });
+
+            document.getElementById('mensajeVacioFacturas').style.display = filtrados.length === 0 ? 'block' : 'none';
+
+            let sRepartidas = 0, sBase = 0;
+            registros.forEach(reg => {
+                sRepartidas += (reg.repartidas || 0);
+                sBase += (reg.totalFacturas || 0);
+            });
+
+            filtrados.forEach((reg) => {
+                const total = reg.totalFacturas || 0;
+                const porc = total > 0 ? ((reg.repartidas / total) * 100).toFixed(1) : '0.0';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${reg.fecha}</td>
+                    <td><code>${reg.ruta}</code></td>
+                    <td><b>${reg.codigo}</b></td>
+                    <td><b>${formatearNombreProlijo(reg.nombre)}</b></td>
+                    <td class="text-center"><b>${total}</b></td>
+                    <td class="text-center" style="color: #047857; font-weight:bold;">${reg.repartidas}</td>
+                    <td class="text-center"><span class="badge-porcentaje">${porc}%</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('livePercentageF').textContent = sBase > 0 ? ((sRepartidas/sBase)*100).toFixed(1) + '%' : '0.0%';
+            document.getElementById('liveDetailsF').textContent = `Repartidas: ${sRepartidas} / Total: ${sBase}`;
+        }
+
+        function exportarExcelFacturas() {
+            if (registrosFacturas.length === 0) {
+                alert('No hay registros de facturas para exportar.');
+                return;
+            }
+            let html = `<table><tr><th>Fecha</th><th>Grupo / Ruta</th><th>Código</th><th>Cartero</th><th>Facturas</th><th>Repartidas</th><th>% Entregadas</th></tr>`;
+            registrosFacturas.forEach(reg => {
+                let total = reg.totalFacturas || 0;
+                let porc = total > 0 ? ((reg.repartidas / total) * 100).toFixed(1) + '%' : '0.0%';
+                html += `<tr><td>${reg.fecha}</td><td>${reg.ruta}</td><td>${reg.codigo}</td><td>${formatearNombreProlijo(reg.nombre)}</td><td>${total}</td><td>${reg.repartidas}</td><td>${porc}</td></tr>`;
+            });
+            html += `</table>`;
+            let blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'Control_Facturas.xls';
+            a.click();
+        }
+
+        // ================= MÓDULO TOMAS DE ESTADO =================
         function parseExcelDate(val) {
             if (!val && val !== 0) return null;
             if (typeof val === 'number') {
@@ -882,7 +1040,6 @@
             const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
             const tbody = document.getElementById('tablaCuerpoT');
             const mensajeVacio = document.getElementById('mensajeVacioT');
-            const contenedorGrafico = document.getElementById('graficoMinimalista');
             
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -893,7 +1050,7 @@
 
             mensajeVacio.style.display = filtrados.length === 0 ? 'block' : 'none';
             document.getElementById('liveTotalJornadas').textContent = resumenTomasTiempos.length;
-            document.getElementById('liveTotalRegistros').textContent = `Registros únicos: ${resumenTomasTiempos.length}`;
+            document.getElementById('liveTotalRegistros').textContent = `Registros únicos: ${resumenTomasTiemnos.length}`;
 
             filtrados.forEach(r => {
                 const tr = document.createElement('tr');
@@ -901,43 +1058,13 @@
                     <td><b>${r.fecha}</b></td>
                     <td><strong>${r.cartero}</strong></td>
                     <td><code>${r.ruta}</code></td>
-                    <td class="text-center" style="color: #2563eb; font-weight: bold;">${r.horaInicio}</td>
-                    <td class="text-center" style="color: #059669; font-weight: bold;">${r.horaFin}</td>
+                    <td class="text-center" style="color: #5a233b; font-weight: bold;">${r.horaInicio}</td>
+                    <td class="text-center" style="color: #047857; font-weight: bold;">${r.horaFin}</td>
                     <td class="text-center"><b>${r.tiempoEfectivo}</b></td>
-                    <td class="text-center"><span class="badge-tomas">${r.cantidadTomas} tomas</span></td>
+                    <td class="text-center"><span class="badge-porcentaje">${r.cantidadTomas} tomas</span></td>
                 `;
                 tbody.appendChild(tr);
             });
-
-            if (filtrados.length === 0) {
-                contenedorGrafico.innerHTML = `<div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>`;
-            } else {
-                const carteroFechaMap = {};
-                filtrados.forEach(item => {
-                    let llave = `${item.carteroSoloNombre} (${item.fecha})`;
-                    carteroFechaMap[llave] = (carteroFechaMap[llave] || 0) + item.cantidadTomas;
-                });
-
-                let maxTomas = Math.max(...Object.values(carteroFechaMap), 1);
-                let htmlGrafico = '';
-
-                Object.keys(carteroFechaMap).forEach(llave => {
-                    let total = carteroFechaMap[llave];
-                    let porcentaje = Math.round((total / maxTomas) * 100);
-                    if (porcentaje < 5) porcentaje = 5;
-
-                    htmlGrafico += `
-                        <div class="chart-bar-row">
-                            <div class="chart-label" title="${llave}">${llave}</div>
-                            <div class="chart-bar-wrapper">
-                                <div class="chart-bar-fill" style="width: ${porcentaje}%;"></div>
-                            </div>
-                            <div class="chart-value">${total}</div>
-                        </div>
-                    `;
-                });
-                contenedorGrafico.innerHTML = htmlGrafico;
-            }
         }
 
         function borrarTodoTomas() {
@@ -948,7 +1075,7 @@
             }
         }
 
-        // ================= LÓGICA MÓDULO 3: CIERRES Y REAPERTURAS =================
+        // ================= MÓDULO 3: CIERRES Y REAPERTURAS =================
         function importarExcelCierres(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -975,14 +1102,12 @@
                 return;
             }
 
-            let colTipo = 0;
             let colEjecutor = 1;
             let colInicio = 2;
             let colFin = 3;
 
             const headers = jsonData[0].map(h => h ? String(h).trim().toLowerCase() : '');
             headers.forEach((h, idx) => {
-                if (h.includes('tipo')) colTipo = idx;
                 if (h.includes('ejecutor') || h.includes('cartero')) colEjecutor = idx;
                 if (h.includes('inicio')) colInicio = idx;
                 if (h.includes('fin')) colFin = idx;
@@ -1073,7 +1198,6 @@
             const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
             const tbody = document.getElementById('tablaCuerpoCierres');
             const mensajeVacio = document.getElementById('mensajeVacioCierres');
-            const contenedorGrafico = document.getElementById('graficoCierresMinimalista');
             
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -1092,37 +1216,11 @@
                     <td><b>${r.fecha}</b></td>
                     <td><strong>${formatearNombreProlijo(r.cartero)}</strong></td>
                     <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;">${r.codigo}</span></td>
-                    <td class="text-center" style="color: #2563eb; font-weight: bold;">${r.tiempoEfectivo}</td>
+                    <td class="text-center" style="color: #5a233b; font-weight: bold;">${r.tiempoEfectivo}</td>
                     <td class="text-center"><span class="badge-tomas">${r.cantidadGestiones} gestiones</span></td>
                 `;
                 tbody.appendChild(tr);
             });
-
-            if (filtrados.length === 0) {
-                contenedorGrafico.innerHTML = `<div style="font-size: 12px; color: #94a3b8; font-style: italic; text-align: center; padding: 10px;">Sin datos para graficar</div>`;
-            } else {
-                let maxMs = Math.max(...filtrados.map(i => i.totalMs), 1);
-                let htmlGrafico = '';
-
-                filtrados.forEach(item => {
-                    let porcentaje = Math.round((item.totalMs / maxMs) * 100);
-                    if (porcentaje < 5 && item.totalMs > 0) porcentaje = 5;
-
-                    let etiquetaGrafico = `${formatearNombreProlijo(item.carteroSoloNombre)} (${item.fecha})`;
-                    let horasTotalesStr = (item.totalMs / 3600000).toFixed(1) + ' hrs';
-
-                    htmlGrafico += `
-                        <div class="chart-bar-row">
-                            <div class="chart-label" title="${etiquetaGrafico}">${etiquetaGrafico}</div>
-                            <div class="chart-bar-wrapper">
-                                <div class="chart-bar-fill" style="width: ${porcentaje}%;"></div>
-                            </div>
-                            <div class="chart-value">${horasTotalesStr}</div>
-                        </div>
-                    `;
-                });
-                contenedorGrafico.innerHTML = htmlGrafico;
-            }
         }
 
         function borrarTodoCierres() {
