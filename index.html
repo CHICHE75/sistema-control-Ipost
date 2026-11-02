@@ -15,7 +15,7 @@
             margin: 0;
             padding: 20px;
         }
-        .container { max-width: 1350px; margin: 0 auto; }
+        .container { max-width: 1450px; margin: 0 auto; }
         
         /* Pantalla de Menú Principal */
         #menuPrincipal {
@@ -39,6 +39,9 @@
             max-width: 160px;
             height: auto;
             margin-bottom: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         .menu-card h1 { font-size: 24px; color: #5a233b; margin-bottom: 8px; }
         .version-badge {
@@ -70,7 +73,6 @@
         }
         .btn-menu:hover { background: #451b2d; }
         
-        /* Variaciones armónicas manteniendo la línea institucional */
         .btn-menu-secondary { background: #6d2839; }
         .btn-menu-secondary:hover { background: #521d2a; }
         .btn-menu-tertiary { background: #831843; }
@@ -85,7 +87,7 @@
         
         header {
             background: #ffffff;
-            padding: 22px 25px;
+            padding: 20px 25px;
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             display: flex;
@@ -95,6 +97,17 @@
             border: 1px solid #e2e8f0;
             flex-wrap: wrap;
             gap: 15px;
+        }
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-logo {
+            width: 110px;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
         h1 { font-size: 22px; margin: 0; color: #5a233b; }
         p { margin: 4px 0 0 0; color: #64748b; font-size: 13px; }
@@ -127,7 +140,7 @@
 
         .form-group { margin-bottom: 14px; }
         label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 5px; }
-        input {
+        input, select {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #cbd5e1;
@@ -136,7 +149,7 @@
             background: #f8fafc;
             transition: all 0.2s;
         }
-        input:focus { outline: none; border-color: #5a233b; background: #fff; box-shadow: 0 0 0 3px rgba(90, 35, 59, 0.1); }
+        input:focus, select:focus { outline: none; border-color: #5a233b; background: #fff; box-shadow: 0 0 0 3px rgba(90, 35, 59, 0.1); }
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         button {
@@ -183,7 +196,13 @@
             margin-top: 4px;
         }
 
-        .table-responsive { overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .table-responsive { 
+            overflow-x: auto; 
+            max-height: 550px;
+            overflow-y: auto; 
+            border-radius: 8px; 
+            border: 1px solid #e2e8f0; 
+        }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; white-space: nowrap; }
         th { 
             background: #f8fafc; 
@@ -193,6 +212,9 @@
             font-weight: 700;
             text-transform: uppercase; 
             border-bottom: 2px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; }
         tbody tr:hover { background: #f8fafc; }
@@ -227,7 +249,6 @@
         <!-- ================= MENÚ PRINCIPAL ================= -->
         <div id="menuPrincipal">
             <div class="menu-card">
-                <!-- LOGO INSTITUCIONAL INTER POST -->
                 <img src="logo.png" alt="Inter Post Logo" class="menu-logo">
                 
                 <span class="version-badge">Versión 1.0 (Estable)</span>
@@ -245,9 +266,12 @@
         <!-- ================= TRABAJO 1: CONTROL AVISOS DE DEUDA ================= -->
         <div id="pantallaAvisosDeuda" class="app-screen">
             <header>
-                <div>
-                    <h1>Control Avisos de Deuda</h1>
-                    <p>Módulo de gestión y efectividad de carteros</p>
+                <div class="header-title-container">
+                    <img src="logo.png" alt="Logo" class="header-logo">
+                    <div>
+                        <h1>Control Avisos de Deuda</h1>
+                        <p>Módulo de gestión y efectividad de carteros</p>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
@@ -332,9 +356,12 @@
         <!-- ================= TRABAJO 2: CONTROL TOMAS DE ESTADO ================= -->
         <div id="pantallaTomas" class="app-screen">
             <header>
-                <div>
-                    <h1>Control Tomas de Estado</h1>
-                    <p>Reporte cronológico y volumen de tomas desglosado por cartero y fecha</p>
+                <div class="header-title-container">
+                    <img src="logo.png" alt="Logo" class="header-logo">
+                    <div>
+                        <h1>Control Tomas de Estado</h1>
+                        <p>Reporte cronológico y volumen de tomas desglosado por cartero y fecha</p>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
@@ -344,42 +371,31 @@
                 </div>
             </header>
 
-            <div class="main-grid">
-                <div class="card">
-                    <h2>Panel Resumen Tomas</h2>
-                    <div class="live-summary-box">
-                        <div class="live-summary-title">Jornadas Registradas</div>
-                        <div id="liveTotalJornadas" class="live-summary-value">0</div>
-                        <div id="liveTotalRegistros" class="live-summary-sub">Registros únicos: 0</div>
-                    </div>
-                </div>
+            <div class="card" style="padding: 16px; margin-bottom: 20px;">
+                <label>Filtrar por Fecha:</label>
+                <select id="filtroFechaTomas" onchange="renderizarTodoTomas()">
+                    <option value="">Todas las fechas</option>
+                </select>
+            </div>
 
-                <div>
-                    <div class="card" style="padding: 16px; margin-bottom: 20px;">
-                        <label>Filtrar por Cartero, Fecha o Ruta:</label>
-                        <input type="text" id="buscadorT" placeholder="Escribe para buscar..." onkeyup="renderizarTodoTomas()">
-                    </div>
-
-                    <div class="card">
-                        <h2>Reporte Detallado</h2>
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Cartero</th>
-                                        <th>Grupo / Ruta</th>
-                                        <th class="text-center">Hora Inicial</th>
-                                        <th class="text-center">Hora Final</th>
-                                        <th class="text-center">Tiempo Total</th>
-                                        <th class="text-center">Cantidad de Tomas</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tablaCuerpoT"></tbody>
-                            </table>
-                            <div id="mensajeVacioT" class="empty">Sube un archivo Excel para ver el reporte.</div>
-                        </div>
-                    </div>
+            <div class="card">
+                <h2>Reporte Detallado</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Cartero</th>
+                                <th>Grupo / Ruta</th>
+                                <th class="text-center">Hora Inicial</th>
+                                <th class="text-center">Hora Final</th>
+                                <th class="text-center">Tiempo Total</th>
+                                <th class="text-center">Cantidad de Tomas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCuerpoT"></tbody>
+                    </table>
+                    <div id="mensajeVacioT" class="empty">Sube un archivo Excel para ver el reporte.</div>
                 </div>
             </div>
         </div>
@@ -387,9 +403,12 @@
         <!-- ================= TRABAJO 3: CONTROL CIERRES Y REAPERTURAS ================= -->
         <div id="pantallaCierres" class="app-screen">
             <header>
-                <div>
-                    <h1>Control Cierres y Reaperturas</h1>
-                    <p>Reporte consolidado por cartero y día</p>
+                <div class="header-title-container">
+                    <img src="logo.png" alt="Logo" class="header-logo">
+                    <div>
+                        <h1>Control Cierres y Reaperturas</h1>
+                        <p>Reporte consolidado por cartero y día</p>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
@@ -440,9 +459,12 @@
         <!-- ================= TRABAJO 4: CONTROL FACTURAS ================= -->
         <div id="pantallaFacturas" class="app-screen">
             <header>
-                <div>
-                    <h1>Control Facturas</h1>
-                    <p>Módulo de gestión y efectividad de entrega de facturas</p>
+                <div class="header-title-container">
+                    <img src="logo.png" alt="Logo" class="header-logo">
+                    <div>
+                        <h1>Control Facturas</h1>
+                        <p>Módulo de gestión y efectividad de entrega de facturas</p>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
@@ -523,22 +545,45 @@
         <!-- ================= TRABAJO 5: RESUMEN DIARIO POR CARTERO ================= -->
         <div id="pantallaResumenGeneral" class="app-screen">
             <header>
-                <div>
-                    <h1>Resumen Diario por Cartero</h1>
-                    <p>Consolidado general de operaciones y rendimiento diario</p>
+                <div class="header-title-container">
+                    <img src="logo.png" alt="Logo" class="header-logo">
+                    <div>
+                        <h1>Resumen Diario por Cartero</h1>
+                        <p>Consolidado general de actividades (Avisos de Deuda, Lecturas, Cierres/Reaperturas y Facturas)</p>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="renderizarResumenGeneral()" class="btn-success">🔄 Actualizar Resumen</button>
                     <button onclick="cambiarPantalla('menuPrincipal', true)" class="btn-volver">⬅ Menú Principal</button>
+                    <button onclick="exportarExcelResumenGeneral()" class="btn-success">Exportar a Excel (.xls)</button>
                 </div>
             </header>
 
+            <div class="card" style="padding: 16px; margin-bottom: 20px;">
+                <label>Filtrar por Fecha:</label>
+                <select id="filtroFechaResumen" onchange="renderizarResumenGeneral()">
+                    <option value="">Todas las fechas</option>
+                </select>
+            </div>
+
             <div class="card">
-                <h2>Próximo Módulo de Consolidación</h2>
-                <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
-                    Este espacio está reservado para integrar y cruzar los datos de todos los módulos anteriores en un solo reporte diario por cartero. 
-                </p>
-                <div class="empty" style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: 50px;">
-                    Espacio listo para configurar los parámetros y métricas que necesites mostrar aquí. ¡Indícame cómo lo armamos!
+                <h2>Consolidado Operativo Diario</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Código</th>
+                                <th>Cartero</th>
+                                <th class="text-center">Avisos de Deuda (% Entregados)</th>
+                                <th class="text-center">Tomas de Estado (Lecturas)</th>
+                                <th class="text-center">Cierres y Reaperturas</th>
+                                <th class="text-center">Facturas (Repartidas)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCuerpoResumenGeneral"></tbody>
+                    </table>
+                    <div id="mensajeVacioResumenGeneral" class="empty">No hay suficientes datos combinados para mostrar el resumen todavía.</div>
                 </div>
             </div>
         </div>
@@ -577,6 +622,53 @@
             return "S/C";
         }
 
+        function normalizarFechaOrden(fechaStr) {
+            if (!fechaStr) return { fechaVisual: "", sortKey: 0 };
+            let s = String(fechaStr).trim();
+            let yyyy = 0, mm = 0, dd = 0;
+
+            if (s.includes('-')) {
+                let partes = s.split('T')[0].split('-');
+                if (partes.length === 3) {
+                    if (partes[0].length === 4) {
+                        yyyy = parseInt(partes[0], 10);
+                        mm = parseInt(partes[1], 10);
+                        dd = parseInt(partes[2], 10);
+                    } else {
+                        dd = parseInt(partes[0], 10);
+                        mm = parseInt(partes[1], 10);
+                        yyyy = parseInt(partes[2], 10);
+                    }
+                }
+            } else if (s.includes('/')) {
+                let partes = s.split(' ')[0].split('/');
+                if (partes.length === 3) {
+                    if (partes[0].length === 4) {
+                        yyyy = parseInt(partes[0], 10);
+                        mm = parseInt(partes[1], 10);
+                        dd = parseInt(partes[2], 10);
+                    } else {
+                        dd = parseInt(partes[0], 10);
+                        mm = parseInt(partes[1], 10);
+                        yyyy = parseInt(partes[2], 10);
+                    }
+                }
+            }
+
+            if (!yyyy || !mm || !dd || isNaN(yyyy) || isNaN(mm) || isNaN(dd)) {
+                return { fechaVisual: s, sortKey: 0 };
+            }
+
+            let sDay = String(dd).padStart(2, '0');
+            let sMonth = String(mm).padStart(2, '0');
+            let sYear = String(yyyy);
+
+            let fechaVisual = `${sDay}/${sMonth}/${sYear}`;
+            let sortKey = parseInt(`${sYear}${sMonth}${sDay}`, 10);
+
+            return { fechaVisual, sortKey };
+        }
+
         function cambiarPantalla(idPantalla, registrarHistorial = false) {
             document.getElementById('menuPrincipal').style.display = 'none';
             document.getElementById('pantallaAvisosDeuda').style.display = 'none';
@@ -595,6 +687,8 @@
                     renderizarTodoTomas();
                 } else if (idPantalla === 'pantallaFacturas') {
                     renderizarTodoFacturas();
+                } else if (idPantalla === 'pantallaResumenGeneral') {
+                    renderizarResumenGeneral();
                 }
             }
             
@@ -656,6 +750,7 @@
         renderizarTodoTomas();
         renderizarTodoCierres();
         renderizarTodoFacturas();
+        renderizarResumenGeneral();
 
         function guardarRegistro(e) {
             e.preventDefault();
@@ -722,7 +817,7 @@
                     <td class="text-center"><b>${total}</b></td>
                     <td class="text-center" style="color: #047857; font-weight:bold;">${reg.firmados}</td>
                     <td class="text-center"><span class="badge-porcentaje">${porc}%</span></td>
-                    <td class="text-center"><button onclick="eliminarCartero(${realIdx})" class="btn-delete">Eliminar</button></td>
+                    <td class="text-center"><button onclick="eliminarCartero(${realIdx})" class="btn-danger" style="padding: 4px 8px; font-size: 11px;">Eliminar</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -966,7 +1061,9 @@
                 if (!parsedDate || isNaN(parsedDate)) continue;
 
                 let soloFecha = parsedDate.toLocaleDateString('es-AR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                let claveGrupo = `${carteroCodigo}_${rutaRaw}_${soloFecha}`;
+                
+                // MODIFICACIÓN: Agrupar por cartero y fecha para sumar todas las tomas de los distintos bloques/rutas del día
+                let claveGrupo = `${carteroCodigo}_${soloFecha}`;
 
                 if (!agrupadorMap[claveGrupo]) {
                     let yyyy = parsedDate.getFullYear();
@@ -984,13 +1081,16 @@
                         timestamps: [],
                         cantidadTomas: 0
                     };
+                } else {
+                    // Si ya existe el grupo, actualizamos la ruta con la última o mantenemos la referencia combinada si se requiere
+                    agrupadorMap[claveGrupo].ruta = rutaRaw;
                 }
 
                 agrupadorMap[claveGrupo].timestamps.push(parsedDate);
                 agrupadorMap[claveGrupo].cantidadTomas++;
             }
 
-            resumenTomasTiempos = [];
+            let nuevosGrupos = [];
             Object.keys(agrupadorMap).forEach(k => {
                 let grupo = agrupadorMap[k];
                 grupo.timestamps.sort((a, b) => a - b);
@@ -1010,7 +1110,7 @@
                     tiempoEfectivo = `${diffHrs}h ${diffMins}m ${diffSecs}s`;
                 }
 
-                resumenTomasTiempos.push({
+                nuevosGrupos.push({
                     carteroOrden: grupo.carteroOrden,
                     cartero: grupo.carteroTexto,
                     carteroSoloNombre: grupo.carteroSoloNombre,
@@ -1024,33 +1124,65 @@
                 });
             });
 
+            let mapaExistente = {};
+            (resumenTomasTiempos || []).forEach(item => {
+                let claveUnica = `${item.carteroOrden || item.cartero}_${item.fecha}`;
+                mapaExistente[claveUnica] = item;
+            });
+
+            nuevosGrupos.forEach(item => {
+                let claveUnica = `${item.carteroOrden}_${item.fecha}`;
+                mapaExistente[claveUnica] = item; 
+            });
+
+            resumenTomasTiempos = Object.values(mapaExistente);
+
             resumenTomasTiempos.sort((a, b) => {
-                if (a.sortKey !== b.sortKey) return a.sortKey - b.sortKey;
+                if (a.sortKey !== b.sortKey) return b.sortKey - a.sortKey; 
                 if (a.carteroOrden !== b.carteroOrden) return a.carteroOrden.localeCompare(b.carteroOrden);
                 return a.ruta.localeCompare(b.ruta);
             });
 
             localStorage.setItem('datosTomasTiemposJFS', JSON.stringify(resumenTomasTiempos));
+            
+            resumenTomasTiempos = JSON.parse(localStorage.getItem('datosTomasTiemposJFS')) || [];
+
+            cambiarPantalla('pantallaTomas', false);
             renderizarTodoTomas();
-            alert(`¡Importación exitosa! Se procesaron ${totalFilasValidas} registros correctamente.`);
+            alert(`¡Importación exitosa! Se sumaron/actualizaron registros correctamente. Total histórico acumulado: ${resumenTomasTiempos.length} grupos.`);
         }
 
         function renderizarTodoTomas() {
-            const inputBuscador = document.getElementById('buscadorT');
-            const texto = inputBuscador && inputBuscador.value ? inputBuscador.value.toLowerCase() : '';
             const tbody = document.getElementById('tablaCuerpoT');
+            const selectFiltro = document.getElementById('filtroFechaTomas');
+            const fechaSeleccionada = selectFiltro ? selectFiltro.value : '';
             const mensajeVacio = document.getElementById('mensajeVacioT');
             
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const filtrados = (resumenTomasTiempos || []).filter(r => {
-                return r.cartero.toLowerCase().includes(texto) || r.ruta.toLowerCase().includes(texto) || r.fecha.includes(texto);
+            let listaTomas = resumenTomasTiempos || [];
+
+            if (selectFiltro) {
+                let valorPrevio = selectFiltro.value;
+                let fechasDisponibles = [...new Set(listaTomas.map(item => item.fecha))];
+                
+                selectFiltro.innerHTML = `<option value="">Todas las fechas</option>`;
+                fechasDisponibles.forEach(fecha => {
+                    let opt = document.createElement('option');
+                    opt.value = fecha;
+                    opt.textContent = fecha;
+                    selectFiltro.appendChild(opt);
+                });
+                selectFiltro.value = valorPrevio;
+            }
+
+            const filtrados = listaTomas.filter(r => {
+                if (!fechaSeleccionada) return true;
+                return r.fecha === fechaSeleccionada;
             });
 
             mensajeVacio.style.display = filtrados.length === 0 ? 'block' : 'none';
-            document.getElementById('liveTotalJornadas').textContent = resumenTomasTiempos.length;
-            document.getElementById('liveTotalRegistros').textContent = `Registros únicos: ${resumenTomasTiemnos.length}`;
 
             filtrados.forEach(r => {
                 const tr = document.createElement('tr');
@@ -1163,7 +1295,7 @@
                 agrupadorCierresMap[claveDiaCartero].cantidadGestiones++;
             }
 
-            let listaConsolidada = [];
+            let nuevosCierres = [];
             Object.keys(agrupadorCierresMap).forEach(k => {
                 let item = agrupadorCierresMap[k];
 
@@ -1173,7 +1305,7 @@
                 let diffSecs = Math.floor((diffMs % 60000) / 1000);
                 let tiempoEfectivoTotal = `${diffHrs}h ${diffMins}m ${diffSecs}s`;
 
-                listaConsolidada.push({
+                nuevosCierres.push({
                     fecha: item.fecha,
                     cartero: item.cartero,
                     carteroSoloNombre: item.carteroSoloNombre,
@@ -1185,12 +1317,26 @@
                 });
             });
 
-            listaConsolidada.sort((a, b) => b.sortKey - a.sortKey || a.cartero.localeCompare(b.cartero));
+            let mapaCierresExistentes = {};
+            (resumenCierresReaperturas || []).forEach(item => {
+                let claveUnica = `${item.cartero}_${item.fecha}`;
+                mapaCierresExistentes[claveUnica] = item;
+            });
 
-            resumenCierresReaperturas = listaConsolidada;
+            nuevosCierres.forEach(item => {
+                let claveUnica = `${item.cartero}_${item.fecha}`;
+                mapaCierresExistentes[claveUnica] = item;
+            });
+
+            resumenCierresReaperturas = Object.values(mapaCierresExistentes);
+            resumenCierresReaperturas.sort((a, b) => b.sortKey - a.sortKey || a.cartero.localeCompare(b.cartero));
+
             localStorage.setItem('datosCierresReaperturasJFS', JSON.stringify(resumenCierresReaperturas));
+            resumenCierresReaperturas = JSON.parse(localStorage.getItem('datosCierresReaperturasJFS')) || [];
+
+            cambiarPantalla('pantallaCierres', false);
             renderizarTodoCierres();
-            alert(`¡Consolidación exitosa! Se procesaron ${totalFilasValidas} gestiones en ${resumenCierresReaperturas.length} jornadas.`);
+            alert(`¡Consolidación exitosa! Total de jornadas acumuladas: ${resumenCierresReaperturas.length}.`);
         }
 
         function renderizarTodoCierres() {
@@ -1217,7 +1363,7 @@
                     <td><strong>${formatearNombreProlijo(r.cartero)}</strong></td>
                     <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;">${r.codigo}</span></td>
                     <td class="text-center" style="color: #5a233b; font-weight: bold;">${r.tiempoEfectivo}</td>
-                    <td class="text-center"><span class="badge-tomas">${r.cantidadGestiones} gestiones</span></td>
+                    <td class="text-center"><span class="badge-porcentaje">${r.cantidadGestiones} gestiones</span></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1229,6 +1375,226 @@
                 localStorage.removeItem('datosCierresReaperturasJFS');
                 renderizarTodoCierres();
             }
+        }
+
+        // ================= MÓDULO 5: RESUMEN GENERAL POR CARTERO =================
+        function renderizarResumenGeneral() {
+            registrosCarteros = JSON.parse(localStorage.getItem('datosAvisosDeudaMulti')) || [];
+            resumenTomasTiempos = JSON.parse(localStorage.getItem('datosTomasTiemposJFS')) || [];
+            resumenCierresReaperturas = JSON.parse(localStorage.getItem('datosCierresReaperturasJFS')) || [];
+            registrosFacturas = JSON.parse(localStorage.getItem('datosFacturasJFS')) || [];
+
+            const tbody = document.getElementById('tablaCuerpoResumenGeneral');
+            const selectFiltro = document.getElementById('filtroFechaResumen');
+            const fechaSeleccionada = selectFiltro ? selectFiltro.value : '';
+            
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const maestroMap = {};
+
+            // 1. Procesar Avisos de Deuda
+            (registrosCarteros || []).forEach(a => {
+                let norm = normalizarFechaOrden(a.fecha);
+                let clave = `${norm.sortKey}_${a.codigo}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = {
+                        fechaVisual: norm.fechaVisual,
+                        sortKey: norm.sortKey,
+                        codigo: a.codigo,
+                        cartero: a.nombre,
+                        avisosFirmados: 0,
+                        avisosTotal: 0,
+                        tomasCount: 0,
+                        cierresCount: 0,
+                        facturasRepartidas: 0,
+                        facturasTotal: 0
+                    };
+                }
+                maestroMap[clave].avisosFirmados += (a.firmados || 0);
+                maestroMap[clave].avisosTotal += ((a.val1 || 0) + (a.val2 || 0));
+            });
+
+            // 2. Procesar Tomas de Estado (Lecturas)
+            (resumenTomasTiempos || []).forEach(t => {
+                let norm = normalizarFechaOrden(t.fecha);
+                let codigoMatch = t.cartero.split(' - ')[0];
+                let nombreMatch = t.cartero.split(' - ')[1] || t.carteroSoloNombre;
+                let clave = `${norm.sortKey}_${codigoMatch}`;
+                
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = {
+                        fechaVisual: norm.fechaVisual,
+                        sortKey: norm.sortKey,
+                        codigo: codigoMatch,
+                        cartero: nombreMatch,
+                        avisosFirmados: 0,
+                        avisosTotal: 0,
+                        tomasCount: 0,
+                        cierresCount: 0,
+                        facturasRepartidas: 0,
+                        facturasTotal: 0
+                    };
+                }
+                maestroMap[clave].tomasCount += (t.cantidadTomas || 0);
+            });
+
+            // 3. Procesar Cierres y Reaperturas
+            (resumenCierresReaperturas || []).forEach(c => {
+                let norm = normalizarFechaOrden(c.fecha);
+                let clave = `${norm.sortKey}_${c.codigo}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = {
+                        fechaVisual: norm.fechaVisual,
+                        sortKey: norm.sortKey,
+                        codigo: c.codigo,
+                        cartero: c.cartero,
+                        avisosFirmados: 0,
+                        avisosTotal: 0,
+                        tomasCount: 0,
+                        cierresCount: 0,
+                        facturasRepartidas: 0,
+                        facturasTotal: 0
+                    };
+                }
+                maestroMap[clave].cierresCount += (c.cantidadGestiones || 0);
+            });
+
+            // 4. Procesar Facturas
+            (registrosFacturas || []).forEach(f => {
+                let norm = normalizarFechaOrden(f.fecha);
+                let clave = `${norm.sortKey}_${f.codigo}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = {
+                        fechaVisual: norm.fechaVisual,
+                        sortKey: norm.sortKey,
+                        codigo: f.codigo,
+                        cartero: f.nombre,
+                        avisosFirmados: 0,
+                        avisosTotal: 0,
+                        tomasCount: 0,
+                        cierresCount: 0,
+                        facturasRepartidas: 0,
+                        facturasTotal: 0
+                    };
+                }
+                maestroMap[clave].facturasRepartidas += (f.repartidas || 0);
+                maestroMap[clave].facturasTotal += (f.totalFacturas || 0);
+            });
+
+            let listaMaestra = Object.values(maestroMap);
+            listaMaestra.sort((a, b) => b.sortKey - a.sortKey);
+
+            if (selectFiltro) {
+                let valorPrevio = selectFiltro.value;
+                let fechasDisponibles = [...new Set(listaMaestra.map(item => item.fechaVisual))];
+                
+                selectFiltro.innerHTML = `<option value="">Todas las fechas</option>`;
+                fechasDisponibles.forEach(fecha => {
+                    let opt = document.createElement('option');
+                    opt.value = fecha;
+                    opt.textContent = fecha;
+                    selectFiltro.appendChild(opt);
+                });
+                selectFiltro.value = valorPrevio;
+            }
+
+            const filtrados = listaMaestra.filter(item => {
+                if (!fechaSeleccionada) return true;
+                return item.fechaVisual === fechaSeleccionada;
+            });
+
+            document.getElementById('mensajeVacioResumenGeneral').style.display = filtrados.length === 0 ? 'block' : 'none';
+
+            filtrados.forEach(item => {
+                const porcAvisos = item.avisosTotal > 0 ? ((item.avisosFirmados / item.avisosTotal) * 100).toFixed(1) + '%' : '0.0%';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${item.fechaVisual}</b></td>
+                    <td><code>${item.codigo}</code></td>
+                    <td><b>${formatearNombreProlijo(item.cartero)}</b></td>
+                    <td class="text-center"><span class="badge-porcentaje">${porcAvisos}</span></td>
+                    <td class="text-center"><span style="background: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-weight: bold; color: #2563eb;">${item.tomasCount} lecturas</span></td>
+                    <td class="text-center"><span style="background: #fdf2f4; padding: 4px 10px; border-radius: 6px; font-weight: bold; color: #831843;">${item.cierresCount} gestiones</span></td>
+                    <td class="text-center"><span class="badge-porcentaje">${item.facturasRepartidas} facturas</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportarExcelResumenGeneral() {
+            renderizarResumenGeneral(); 
+            const maestroMap = {};
+
+            (registrosCarteros || []).forEach(a => {
+                let norm = normalizarFechaOrden(a.fecha);
+                let clave = `${norm.sortKey}_${a.codigo}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = { fechaVisual: norm.fechaVisual, sortKey: norm.sortKey, codigo: a.codigo, cartero: a.nombre, avisosFirmados: 0, avisosTotal: 0, tomasCount: 0, cierresCount: 0, facturasRepartidas: 0, facturasTotal: 0 };
+                }
+                maestroMap[clave].avisosFirmados += (a.firmados || 0);
+                maestroMap[clave].avisosTotal += ((a.val1 || 0) + (a.val2 || 0));
+            });
+
+            (resumenTomasTiempos || []).forEach(t => {
+                let norm = normalizarFechaOrden(t.fecha);
+                let codigoMatch = t.cartero.split(' - ')[0];
+                let nombreMatch = t.cartero.split(' - ')[1] || t.carteroSoloNombre;
+                let clave = `${norm.sortKey}_${codigoMatch}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = { fechaVisual: norm.fechaVisual, sortKey: norm.sortKey, codigo: codigoMatch, cartero: nombreMatch, avisosFirmados: 0, avisosTotal: 0, tomasCount: 0, cierresCount: 0, facturasRepartidas: 0, facturasTotal: 0 };
+                }
+                maestroMap[clave].tomasCount += (t.cantidadTomas || 0);
+            });
+
+            (resumenCierresReaperturas || []).forEach(c => {
+                let norm = normalizarFechaOrden(c.fecha);
+                let clave = `${norm.sortKey}_${c.codigo}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = { fechaVisual: norm.fechaVisual, sortKey: norm.sortKey, codigo: c.codigo, cartero: c.cartero, avisosFirmados: 0, avisosTotal: 0, tomasCount: 0, cierresCount: 0, facturasRepartidas: 0, facturasTotal: 0 };
+                }
+                maestroMap[clave].cierresCount += (c.cantidadGestiones || 0);
+            });
+
+            (registrosFacturas || []).forEach(f => {
+                let norm = normalizarFechaOrden(f.fecha);
+                let clave = `${norm.sortKey}_${f.codigo}`;
+                if (!maestroMap[clave]) {
+                    maestroMap[clave] = { fechaVisual: norm.fechaVisual, sortKey: norm.sortKey, codigo: f.codigo, cartero: f.nombre, avisosFirmados: 0, avisosTotal: 0, tomasCount: 0, cierresCount: 0, facturasRepartidas: 0, facturasTotal: 0 };
+                }
+                maestroMap[clave].facturasRepartidas += (f.repartidas || 0);
+                maestroMap[clave].facturasTotal += (f.totalFacturas || 0);
+            });
+
+            let listaMaestra = Object.values(maestroMap);
+            if (listaMaestra.length === 0) {
+                alert('No hay datos en el resumen general para exportar.');
+                return;
+            }
+
+            listaMaestra.sort((a, b) => b.sortKey - a.sortKey);
+
+            const selectFiltro = document.getElementById('filtroFechaResumen');
+            const fechaSeleccionada = selectFiltro ? selectFiltro.value : '';
+            const listaExportar = listaMaestra.filter(item => {
+                let coincideFecha = !fechaSeleccionada || item.fechaVisual === fechaSeleccionada;
+                let tieneActividad = item.avisosTotal > 0 || item.tomasCount > 0 || item.cierresCount > 0 || item.facturasRepartidas > 0;
+                return coincideFecha && tieneActividad;
+            });
+
+            let html = `<table><tr><th>Fecha</th><th>Código</th><th>Cartero</th><th>Avisos de Deuda (% Entregados)</th><th>Tomas de Estado (Lecturas)</th><th>Cierres y Reaperturas</th><th>Facturas (Repartidas)</th></tr>`;
+            listaExportar.forEach(item => {
+                let porcAvisos = item.avisosTotal > 0 ? ((item.avisosFirmados / item.avisosTotal) * 100).toFixed(1) + '%' : '0.0%';
+                html += `<tr><td>${item.fechaVisual}</td><td>${item.codigo}</td><td>${formatearNombreProlijo(item.cartero)}</td><td>${porcAvisos}</td><td>${item.tomasCount}</td><td>${item.cierresCount}</td><td>${item.facturasRepartidas}</td></tr>`;
+            });
+            html += `</table>`;
+            let blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'Resumen_Diario_Cartero.xls';
+            a.click();
         }
     </script>
 </body>
